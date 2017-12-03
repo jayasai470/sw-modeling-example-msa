@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: gmv-service
+
+server:
+  port: ${port:8088}
+  servletPath: /
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck:
+      enabled: true
