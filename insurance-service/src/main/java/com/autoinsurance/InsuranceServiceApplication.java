@@ -1,5 +1,6 @@
 package com.autoinsurance;
 
+import com.autoinsurance.services.CreditService;
 import org.metaworks.springboot.configuration.Metaworks4BaseApplication;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,12 +8,14 @@ import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.autoconfigure.transaction.TransactionManagerCustomizers;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.transaction.jta.JtaTransactionManager;
 
 import javax.sql.DataSource;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableFeignClients(basePackageClasses = {CreditService.class})
 public class InsuranceServiceApplication extends Metaworks4BaseApplication {
 
 	/**

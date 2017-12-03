@@ -13,6 +13,8 @@
  */
 package com.autoinsurance;
 
+import org.metaworks.annotation.RestAssociation;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -40,8 +42,12 @@ public class Vehicle implements Serializable {
 	@Column(name="Type", nullable=false, length=10)	
 	private int type;
 	
-	@Column(name="Brand", nullable=true, length=255)	
-	private String brand;
+	@RestAssociation(path="vehicle-detail/{modelName}/brand", serviceId = "gmv-service")
+	transient private String brand;
+
+	@RestAssociation(path="vehicle-detail/{modelName}", serviceId = "gmv-service")
+	transient String vehicleDetail;
+
 	
 	private void setId(long value) {
 		setId(new Long(value));
@@ -94,5 +100,6 @@ public class Vehicle implements Serializable {
 	public String toString() {
 		return String.valueOf(getId());
 	}
+
 	
 }

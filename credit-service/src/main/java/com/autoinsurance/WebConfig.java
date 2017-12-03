@@ -37,22 +37,6 @@ import java.util.Properties;
 @EnableJpaRepositories(repositoryBaseClass = MultitenantRepositoryImpl.class)
 public class WebConfig extends Metaworks4WebConfig {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8082", "http://localhost:8081", "*")
-                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("access_token", "Content-Type");
-
-    }
-
-    @Bean
-    public ResourceManager resourceManager() {
-        ResourceManager resourceManager = new CachedResourceManager();
-        resourceManager.setStorage(storage());
-        return resourceManager;
-    }
 
     @Bean
     /**
@@ -70,43 +54,5 @@ public class WebConfig extends Metaworks4WebConfig {
         return storage;
     }
 
-    @Bean
-    public TenantAwareFilter tenantAwareFilter(){
-        return new TenantAwareFilter();
-    }
-
-    @Bean
-    public MetadataService metadataService() {
-        DefaultMetadataService metadataService = new DefaultMetadataService();
-        metadataService.setResourceManager(resourceManager());
-
-        return metadataService;
-    }
-
-//    @Bean
-//    public DataSource dataSource() {
-//        //In classpath from spring-boot-starter-web
-//        final Properties pool = new Properties();
-//        pool.put("driverClassName", "com.mysql.jdbc.Driver");
-//        pool.put("url", "jdbc:mysql://localhost:3306/uengine?useUnicode=true&characterEncoding=UTF8&useOldAliasMetadataBehavior=true");
-//        pool.put("username", "root");
-//        pool.put("password", "");
-//        pool.put("minIdle", 1);
-//        try {
-//            return new org.apache.tomcat.jdbc.pool.DataSourceFactory().createDataSource(pool);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-    @Bean
-    @Primary
-    public JpaProperties jpaProperties() {
-
-        JpaProperties propertiesMap = new JpaProperties();
-        propertiesMap.getProperties().put(PersistenceUnitProperties.DDL_GENERATION, PersistenceUnitProperties.CREATE_OR_EXTEND);
-
-        return propertiesMap;
-    }
 
 }

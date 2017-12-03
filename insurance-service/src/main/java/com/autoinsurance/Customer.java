@@ -13,10 +13,16 @@
  */
 package com.autoinsurance;
 
+import com.autoinsurance.services.CreditService;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.metaworks.annotation.*;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.multitenancy.persistence.BeforeSave;
 import org.metaworks.multitenancy.persistence.TenantProperties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.persistence.Id;
@@ -32,7 +38,8 @@ import java.io.Serializable;
 		name = "TENANTID",
 		contextProperty = "tenant-id"
 )
-public class Customer implements Serializable{
+@Configurable
+public class Customer implements Serializable, BeforeSave{
 	public Customer() {
 	}
 	
@@ -41,6 +48,8 @@ public class Customer implements Serializable{
 	@GeneratedValue(generator="COM_AUTOINSURANCE_CUSTOMER_ID_GENERATOR")	
 	@org.hibernate.annotations.GenericGenerator(name="COM_AUTOINSURANCE_CUSTOMER_ID_GENERATOR", strategy="native")	
 	private Long id;
+
+	private String ssn;
 	
 	@Column(name="FirstName", nullable=true, length=255)
 	private String firstName;
@@ -149,7 +158,7 @@ public class Customer implements Serializable{
 
 	@Transient
 	@RestAssociation(
-		path = "/pools/default/buckets/default/docs/{{tenantId}}_{{entity.name}}_{{@id}}"
+		path = "/pools/default/buckets/default/docs/{#tenant.tenantId}_{class.name}_{id}"
 	)
 	TenantProperties tenantProperties;
 	@Hidden
@@ -159,6 +168,34 @@ public class Customer implements Serializable{
 		public void setTenantProperties(TenantProperties tenantProperties) {
 			this.tenantProperties = tenantProperties;
 		}
+
+
+	public String getSsn() {
+		return ssn;
+	}
+
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
+	}
+
+
+//	@Autowired
+//	CreditService creditService;
+
+	@Override
+	public void beforeSave() {
+
+		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
+
+
+		if(creditService
+				.getCredit(getSsn())
+				.getCreditRate()
+				.compareTo("B") > 0){
+			throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+		}
+
+	}
 
 
 }

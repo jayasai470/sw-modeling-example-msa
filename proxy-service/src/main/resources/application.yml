@@ -13,11 +13,15 @@ zuul:
   routes:
     customer:
       path: /customer/**
-      serviceId: customer-service
+      serviceId: insurance-service
       stripPrefix: false
-    instance:
+    vehicle:
       path: /vehicle/**
       serviceId: insurance-service
+      stripPrefix: false
+    vehicle-detail:
+      path: /vehicle-detail/**
+      serviceId: gmv-service
       stripPrefix: false
 
 endpoints:

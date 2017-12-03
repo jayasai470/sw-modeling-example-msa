@@ -15,7 +15,7 @@
 
     <modules>
         <module>bounded-context</module>
-        <module>customer-service</module>
+        <module>credit-service</module>
         <module>insurance-service</module>
         <module>gmv-service</module>
         <module>proxy-service</module>

@@ -9,13 +9,13 @@
     </parent>
 
     <groupId>com.autoinsurance</groupId>
-    <artifactId>customer-service</artifactId>
+    <artifactId>credit-service</artifactId>
 
     <version>${parent.version}</version>
 
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <name>auto insurance customer service</name>
+    <name>auto insurance credit service</name>
 
 
 

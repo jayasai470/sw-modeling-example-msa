@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: customer-service
+    name: credit-service
 
 eureka:
   client:
