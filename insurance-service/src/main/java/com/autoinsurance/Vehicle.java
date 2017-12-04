@@ -13,7 +13,13 @@
  */
 package com.autoinsurance;
 
+import com.autoinsurance.entities.Brand;
+import com.autoinsurance.services.GMVService;
 import org.metaworks.annotation.RestAssociation;
+import org.metaworks.dwr.MetaworksRemoteService;
+import org.metaworks.multitenancy.persistence.BeforeSave;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +27,8 @@ import java.io.Serializable;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Vehicle")
-public class Vehicle implements Serializable {
+@Configurable
+public class Vehicle implements Serializable, BeforeSave {
 	public Vehicle() {
 	}
 	
@@ -42,8 +49,7 @@ public class Vehicle implements Serializable {
 	@Column(name="Type", nullable=false, length=10)	
 	private int type;
 	
-	@RestAssociation(path="vehicle-detail/{modelName}/brand", serviceId = "gmv-service")
-	transient private String brand;
+	private String brand;
 
 	@RestAssociation(path="vehicle-detail/{modelName}", serviceId = "gmv-service")
 	transient String vehicleDetail;
@@ -101,5 +107,16 @@ public class Vehicle implements Serializable {
 		return String.valueOf(getId());
 	}
 
-	
+
+//	@Autowired
+//	GMVService gmvService;
+
+	@Override
+	public void beforeSave() {  //Denormalization Example
+		GMVService gmvService = MetaworksRemoteService.getInstance().getComponent(GMVService.class);
+
+		Brand brand = gmvService.getBrand(getModelName());
+
+		setBrand(brand.getName());
+	}
 }
