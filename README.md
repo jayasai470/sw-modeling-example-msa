@@ -2,7 +2,7 @@
 
 ## This is Micro Service Architecture edition of sw-modeling-example
 
-- decomposition of services
+### decomposition of services
 
 There are three separated services governed by different organizations:
 
@@ -10,7 +10,7 @@ There are three separated services governed by different organizations:
 2. GMV (Government of motor vehicle) Service
 3. Insurance Service
 
-- Implementing Credit Service
+### Implementing Credit Service
 
 The service will store the credit information by SSN and user can search by uri pattern with SSN:
 ```json
@@ -71,7 +71,7 @@ public interface CreditRepository extends PagingAndSortingRepository<Credit, Str
 }
 ```
 
-- Integration with credit service
+### Integration with credit service
 
 Before saving the customer, insurance service need to confirm the credit rate of new coming customer, 
 
