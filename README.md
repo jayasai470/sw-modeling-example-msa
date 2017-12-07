@@ -140,3 +140,20 @@ To start up the eureka server:
 
 After several seconds, go to http://localhost:8761/
 
+
+```java
+	@Override
+	public void beforeSave() {
+
+		
+		CreditService creditService = MetaworksRemoteService.getInstance().getBeanFactory().getBean(CreditService.class);
+		
+		String creditRate = creditService.getCredit(getSocialNumber()).getCreditRate();
+		
+		if(creditRate.compareTo("B") > 0){
+			throw new RuntimeException("신용도 부족입니다");
+		}
+	}
+
+```
+
