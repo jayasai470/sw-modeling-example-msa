@@ -115,5 +115,28 @@ public class Customer implements Serializable, BeforeSave {
 }
 ```
 
-[Note] To use the callback interface and method 'BeforeSave', your repository base interface must be 'MultitenantRepository' of metaworks4 framework.
+[Note] To use the callback interface and method 'BeforeSave', your repository base interface must be 'MultitenantRepository' of metaworks4 framework, not the 'PagingAndSortingRepository'.
+
+
+### Removing direct network address
+
+In the previous example, there is a direct link to the credit service :
+
+```java
+	String uri = "http://localhost:8083/credits/" + getSocialNumber();
+
+```
+
+we can implicitly obtain the service's host name by Registry service prodived by EUREKA
+
+EUREKA server is contained in this project:
+
+To start up the eureka server:
+
+```bash
+  $ cd registry-service
+  $ mvn spring-boot:run
+```
+
+After several seconds, go to http://localhost:8761/
 
