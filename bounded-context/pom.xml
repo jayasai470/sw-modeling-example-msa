@@ -8,6 +8,8 @@
         <version>MSA-version</version>
     </parent>
 
+
+
     <groupId>com.autoinsurance</groupId>
     <artifactId>bounded-context</artifactId>
 
@@ -16,7 +18,5 @@
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
     <name>auto insurance bounded context classes</name>
-
-
 
 </project>

@@ -96,6 +96,7 @@ public class Customer implements Serializable, BeforeSave{
 
 	@Order(1)
 	@Group(name="Default Information")
+	@Face(displayName = "이름")
 	public String getFirstName() {
 		return firstName;
 	}
@@ -106,6 +107,7 @@ public class Customer implements Serializable, BeforeSave{
 
 	@Order(2)
 	@Group(name="Default Information")
+	@Face(displayName = "성")
 	public String getLastName() {
 		return lastName;
 	}
@@ -170,6 +172,8 @@ public class Customer implements Serializable, BeforeSave{
 		}
 
 
+	@Face(displayName = "주민등록번호")
+	@NonEditable
 	public String getSsn() {
 		return ssn;
 	}
@@ -187,12 +191,15 @@ public class Customer implements Serializable, BeforeSave{
 
 		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
 
-
-		if(creditService
-				.getCredit(getSsn())
-				.getCreditRate()
-				.compareTo("B") > 0){
-			throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+		try {
+			if (creditService
+					.getCredit(getSsn())
+					.getCreditRate()
+					.compareTo("B") > 0) {
+				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+			}
+		}catch(Exception e){
+			throw new RuntimeException("Check your SSN: " + getSsn());
 		}
 
 	}

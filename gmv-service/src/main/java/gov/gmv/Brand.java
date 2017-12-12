@@ -7,7 +7,7 @@ import javax.persistence.Id;
  * Created by uengine on 2017. 12. 3..
  */
 @Entity
-public class Brand {
+public class Brand{
 
     @Id
     String brandId;
