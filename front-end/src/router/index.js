@@ -3,13 +3,41 @@ import Router from 'vue-router'
 import Home from '@/components/Home.vue'
 import NameAndAddress from '@/components/NameAndAddress.vue'
 import Vehicle from '@/components/Vehicle.vue'
-import Login from '@/components/Login.vue'
+import Login from '../../node_modules/metaworks4/src/components/Login.vue'
+import Metaworks4 from '../../node_modules/metaworks4'
 
-var iam = new IAM('http://iam.uengine.io:8080');
-iam.setDefaultClient('e74a9505-a811-407f-b4f6-129b7af1c703','109cf590-ac67-4b8c-912a-913373ada046');
+
+/**
+ * Iam && Vue Router
+ * @type {IAM}
+ */
+
+var clientKey = "my-client-key";
+
+//This required for managing user rest api (avatar upload, curl user data, etc..)
+//If the client type is not public,(described in iam yaml setting) the rest api will rejected.
+var clientSecret = "my-client-secret";
+
+//window.profile will be autowired by uengine-cloud-server. It can be local,dev,stg,prod. default is 'local'.
+var profile = window.profile;
+
+
+//Change the url your IAM application's vcap service's profile url.
+//For example, 'http://' + config.vcap.services['your-iam-server'][profile].external;
+var iamUrl = 'http://iam.pas-mini.io';
+
+//Define iam client
+var iam = new IAM(iamUrl);
+
+//Set clientKey, clientSecret(optional).
+iam.setDefaultClient(clientKey, clientSecret);
+
+//Mark in window
+window.iam = iam;
 
 let RouterGuard = require("./RouterGuard.js")(iam);
 Vue.use(Router);
+
 
 
 /**
@@ -17,6 +45,7 @@ Vue.use(Router);
  */
 let VueResource = require('vue-resource-2');
 Vue.use(VueResource);
+Vue.use(Metaworks4);
 
 
 Vue.component('home', Home);
@@ -52,7 +81,10 @@ export default new Router({
       path: '/auth/:command',
       name: 'login',
       component: Login,
-      props: {iam: iam},
+      props: {
+        iamServer: 'http://iam.pas-mini.io',
+        scopes: "cloud-server"
+      },
       beforeEnter: RouterGuard.requireGuest
     }
   ]
