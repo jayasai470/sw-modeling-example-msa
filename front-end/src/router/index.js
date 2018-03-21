@@ -54,7 +54,8 @@ Vue.component('vehicle', Vehicle);
 
 
 export default new Router({
-  mode: 'history',
+  //mode: 'history',
+  base: '/',
   routes: [
     {
       path: '/',
@@ -82,7 +83,7 @@ export default new Router({
       name: 'login',
       component: Login,
       props: {
-        iamServer: 'http://iam.pas-mini.io',
+        iamServer: iamUrl,
         scopes: "cloud-server"
       },
       beforeEnter: RouterGuard.requireGuest

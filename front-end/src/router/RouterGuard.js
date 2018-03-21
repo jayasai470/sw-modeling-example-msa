@@ -33,7 +33,9 @@ module.exports = function (iam) {
     module.iam.validateToken(localStorage['access_token'])
       .done(function (info) {
         localStorage['user'] = info.context.user;
-        localStorage['userName'] = info.context.username;
+        localStorage['username'] = info.context['username'];
+        localStorage['acl'] = info.context.user['metaData'].acl;
+        localStorage['gitlab-id'] = info.context.user['metaData']['gitlab-id'];
         callback(true);
       })
       .fail(function () {
