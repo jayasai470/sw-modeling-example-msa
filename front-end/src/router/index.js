@@ -5,6 +5,7 @@ import NameAndAddress from '@/components/NameAndAddress.vue'
 import Vehicle from '@/components/Vehicle.vue'
 import Login from '../../node_modules/metaworks4/src/components/Login.vue'
 import Metaworks4 from '../../node_modules/metaworks4'
+import Customer from '@/components/Customer.vue'
 
 
 /**
@@ -51,6 +52,7 @@ Vue.use(Metaworks4);
 Vue.component('home', Home);
 Vue.component('name-and-address', NameAndAddress);
 Vue.component('vehicle', Vehicle);
+Vue.component('customer', Customer);
 
 
 export default new Router({

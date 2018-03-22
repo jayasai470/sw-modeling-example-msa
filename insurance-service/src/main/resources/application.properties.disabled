@@ -1,6 +1,0 @@
-
-# EMBEDDED SERVER CONFIGURATION
-server.port=${port:8089}
-server.error.whitelabel.enabled=false
-# PROFILES
-spring.profiles.active=prod

@@ -33,11 +33,11 @@ import java.io.Serializable;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Customer")
-@Multitenant
-@TenantDiscriminatorColumn(
-		name = "TENANTID",
-		contextProperty = "tenant-id"
-)
+//@Multitenant
+//@TenantDiscriminatorColumn(
+//		name = "TENANTID",
+//		contextProperty = "tenant-id"
+//)
 @Configurable
 public class Customer implements Serializable, BeforeSave{
 	public Customer() {
@@ -189,18 +189,18 @@ public class Customer implements Serializable, BeforeSave{
 	@Override
 	public void beforeSave() {
 
-		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
-
-		try {
-			if (creditService
-					.getCredit(getSsn())
-					.getCreditRate()
-					.compareTo("B") > 0) {
-				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
-			}
-		}catch(Exception e){
-			throw new RuntimeException("Check your SSN: " + getSsn());
-		}
+//		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
+//
+//		try {
+//			if (creditService
+//					.getCredit(getSsn())
+//					.getCreditRate()
+//					.compareTo("B") > 0) {
+//				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+//			}
+//		}catch(Exception e){
+//			throw new RuntimeException("Check your SSN: " + getSsn());
+//		}
 
 	}
 

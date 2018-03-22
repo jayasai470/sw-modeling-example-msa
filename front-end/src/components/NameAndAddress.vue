@@ -14,11 +14,7 @@
       </md-card-actions>
 
       <md-card-content>
-        <object-form ref="object-form"
-                     java="com.autoinsurance.Customer"
-                     :serviceLocator="backend"
-                     :data = "customer">
-        </object-form>
+        <customer v-model="customer"></customer>
       </md-card-content>
     </md-card>
 
@@ -35,6 +31,7 @@
       </md-card-actions>
 
       <md-card-content>
+
         <object-grid ref="vehicles"
                      java="com.autoinsurance.Vehicle"
                      :serviceLocator="backend"
