@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 
-    <groupId>org.uengine</groupId>
-    <artifactId>auto-insurance-bounded-context</artifactId>
+    <groupId>com.autoinsurance</groupId>
+    <artifactId>bounded-context</artifactId>
 
     <version>MSA-version</version>
 
