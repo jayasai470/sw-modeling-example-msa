@@ -113,10 +113,10 @@ public class Vehicle implements Serializable, BeforeSave {
 
 	@Override
 	public void beforeSave() {  //Denormalization Example
-		GMVService gmvService = MetaworksRemoteService.getInstance().getComponent(GMVService.class);
-
-		Brand brand = gmvService.getBrand(getModelName());
-
-		setBrand(brand.getName());
+//		GMVService gmvService = MetaworksRemoteService.getInstance().getComponent(GMVService.class);
+//
+//		Brand brand = gmvService.getBrand(getModelName());
+//
+//		setBrand(brand.getName());
 	}
 }

@@ -2,45 +2,23 @@
 
   <div>
 
-    <md-card v-if="page=='name-and-address'">
-      <md-card-header>
-        <div class="md-title">Name And Address</div>
-        <div class="md-subhead">Subtitle here</div>
-      </md-card-header>
 
-      <md-card-actions>
-        <md-button @click.native="next();">Next</md-button>
-        <md-button>Cancel</md-button>
-      </md-card-actions>
+  <md-tabs>
+    <md-tab id="movies" md-label="Name And Address">
+      <customer v-model="customer" @saved="startQuote"></customer>
+    </md-tab>
 
-      <md-card-content>
-        <customer v-model="customer"></customer>
-      </md-card-content>
-    </md-card>
+    <md-tab id="music" md-label="Vehicles">
+      <vehicle v-model="customer.vehicles"></vehicle>
+    </md-tab>
 
-    <md-card v-if="page=='vehicles'">
+    <md-tab id="books" md-label="Drivers">
+    </md-tab>
 
-      <md-card-header>
-        <div class="md-title">Vehicles</div>
-        <div class="md-subhead">Subtitle here</div>
-      </md-card-header>
+    <md-tab id="pictures" md-label="Final Details" md-tooltip="This is the pictures tab!">
+    </md-tab>
+  </md-tabs>
 
-      <md-card-actions>
-        <md-button @click.native="nextVehicles();">Next</md-button>
-        <md-button>Previous</md-button>
-      </md-card-actions>
-
-      <md-card-content>
-
-        <object-grid ref="vehicles"
-                     java="com.autoinsurance.Vehicle"
-                     :serviceLocator="backend"
-                     :data = "vehicles"
-                     :full-fledged="true"
-        >
-        </object-grid>
-      </md-card-content>
-    </md-card>
 
     <md-snackbar md-position="bottom center" ref="snackbar" :md-duration="4000">
       <span>{{message}}</span>
@@ -82,7 +60,7 @@
 
     methods:{
 
-      next: function(){
+      startQuote: function(){
 
           var me = this;
 

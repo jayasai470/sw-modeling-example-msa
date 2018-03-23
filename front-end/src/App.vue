@@ -11,7 +11,12 @@
 </template>
 <script>
   export default {
-    data () {
+    props: {  //public field // settter/ getter
+      value: String,
+      metadata: Object
+
+    },
+    data () {  //private fields
       return {
         location: window.location,
         snackbar: {
@@ -28,7 +33,7 @@
     mounted() {
 
     },
-    methods: {
+    methods: {  // behavours methods
       info: function (msg) {
         this.snackbar.context = 'info';
         this.snackbar.text = msg;
