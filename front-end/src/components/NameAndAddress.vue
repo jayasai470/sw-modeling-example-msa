@@ -4,23 +4,23 @@
 
 
   <md-tabs>
-    <md-tab id="movies" md-label="Name And Address">
+    <md-tab id="bio" md-label="Name And Address">
       <customer v-model="customer" @saved="startQuote"></customer>
     </md-tab>
 
-    <md-tab id="music" md-label="Vehicles">
+    <md-tab id="vehicles" md-label="Vehicles">
       <vehicle v-model="customer.vehicles"></vehicle>
     </md-tab>
 
-    <md-tab id="books" md-label="Drivers">
+    <md-tab id="drivers" md-label="Drivers">
     </md-tab>
 
-    <md-tab id="pictures" md-label="Final Details" md-tooltip="This is the pictures tab!">
+    <md-tab id="final" md-label="Final Details" md-tooltip="This is the pictures tab!">
     </md-tab>
   </md-tabs>
 
 
-    <md-snackbar md-position="bottom center" ref="snackbar" :md-duration="4000">
+    <md-snackbar md-position="top center" ref="snackbar" :md-duration="4000">
       <span>{{message}}</span>
       <md-button class="md-accent" md-theme="light-blue" @click.native="$refs.snackbar.close()">Ok</md-button>
     </md-snackbar>
@@ -70,7 +70,8 @@
 
             me.customer = customer;
 
-            me.page = "vehicles";
+            me.message="Successfully Saved";
+            me.$refs.snackbar.open();
           },
           function(err){
             console.log(err);
