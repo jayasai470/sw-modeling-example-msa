@@ -33,16 +33,17 @@ import java.io.Serializable;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Customer")
+
+/** uncommend if want to apply multi-tenancy support **/
+
 //@Multitenant
 //@TenantDiscriminatorColumn(
 //		name = "TENANTID",
 //		contextProperty = "tenant-id"
 //)
 @Configurable
-public class Customer implements Serializable, BeforeSave{
-	public Customer() {
-	}
-	
+public class Customer{
+
 	@Column(name="Id", nullable=false, length=19)	
 	@Id	
 	@GeneratedValue(generator="COM_AUTOINSURANCE_CUSTOMER_ID_GENERATOR")	
@@ -183,26 +184,37 @@ public class Customer implements Serializable, BeforeSave{
 	}
 
 
-//	@Autowired
-//	CreditService creditService;
+	/** uncommend if want to apply credit validation before saving the customer info **/
 
-	@Override
+	@PrePersist
 	public void beforeSave() {
 
-//		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
-//
-//		try {
-//			if (creditService
-//					.getCredit(getSsn())
-//					.getCreditRate()
-//					.compareTo("B") > 0) {
-//				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
-//			}
-//		}catch(Exception e){
-//			throw new RuntimeException("Check your SSN: " + getSsn());
-//		}
+		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
+
+		try {
+			if(creditService==null) throw new Exception("Credit Service is not available");
+
+			if (creditService
+					.getCredit(getSsn())
+					.getCreditRate()
+					.compareTo("B") > 0) {
+				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+			}
+		}catch(Exception e){
+			throw new RuntimeException("Check your SSN: " + getSsn(), e);
+		}
 
 	}
 
+	private String driverLicenseNumber;
 
+
+
+	public void setDriverLicenseNumber(String driverLicenseNumber) {
+		this.driverLicenseNumber = driverLicenseNumber;
+	}
+
+	public String getDriverLicenseNumber() {
+		return driverLicenseNumber;
+	}
 }

@@ -3,16 +3,17 @@
   <div>
 
 
+
   <md-tabs>
-    <md-tab id="bio" md-label="Name And Address">
+    <md-tab id="bio" md-label="Name And Address" v-if="iam.scopes['view-bio']">
       <customer v-model="customer" @saved="startQuote"></customer>
     </md-tab>
 
-    <md-tab id="vehicles" md-label="Vehicles">
+    <md-tab id="vehicles" md-label="Vehicles" v-if="iam.scopes['view-vehicle']">
       <vehicle v-model="customer.vehicles"></vehicle>
     </md-tab>
 
-    <md-tab id="drivers" md-label="Drivers">
+    <md-tab id="drivers" md-label="Drivers" v-if="iam.scopes['bio']">
     </md-tab>
 
     <md-tab id="final" md-label="Final Details" md-tooltip="This is the pictures tab!">

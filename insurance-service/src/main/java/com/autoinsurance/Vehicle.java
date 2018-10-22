@@ -13,8 +13,6 @@
  */
 package com.autoinsurance;
 
-import com.autoinsurance.entities.Brand;
-import com.autoinsurance.services.GMVService;
 import org.metaworks.annotation.RestAssociation;
 import org.metaworks.dwr.MetaworksRemoteService;
 import org.metaworks.multitenancy.persistence.BeforeSave;

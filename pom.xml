@@ -15,10 +15,10 @@
     </parent>
 
     <modules>
-        <module>bounded-context</module>
+        <module>shared-kernel</module>
         <module>credit-service</module>
         <module>insurance-service</module>
-        <module>gmv-service</module>
+        <module>dmv-service</module>
         <module>proxy-service</module>
         <module>registry-service</module>
     </modules>

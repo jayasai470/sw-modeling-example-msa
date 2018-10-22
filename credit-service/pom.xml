@@ -18,11 +18,6 @@
     <name>auto insurance credit service</name>
 
     <dependencies>
-        <dependency>
-            <groupId>com.autoinsurance</groupId>
-            <artifactId>bounded-context</artifactId>
-            <version>${parent.version}</version>
-        </dependency>
     </dependencies>
 
 
