@@ -147,11 +147,29 @@ To start up the eureka server:
   $ mvn spring-boot:run
 ```
 
-After several seconds, go to http://localhost:8761/
+After several seconds, go to http://localhost:8761/, you can find the services are up and listed in the registry.
+Also we need to run the gateway service for integrating these uris from the services into single host:
+
+```bash
+  $ cd proxy-service
+  $ mvn spring-boot:run
+```
+
+Now then we can access the services with single host localhost:8080:
+
+```
+http localhost:8080/credit-service/credits ssn="770921" creditRate="C”
+http localhost:8080/customers firstName="jjy" ssn="770921"   #may fail with "Low credit rate"
+
+```
+
+(You can check the path mappings configured in the application.yaml file of the proxy-service/src/main/resources)
+
+One the dynamic service registration has been configured, you can then more easily integrate these micro-services with 'FeignClient':
 
 
 ```java
-	@Override
+	@PrePersist
 	public void beforeSave() {
 
 		
@@ -166,3 +184,17 @@ After several seconds, go to http://localhost:8761/
 
 ```
 
+CreditService interface contains the service id that exposed and registered to the EUREKA, that look like this:
+```
+
+@FeignClient(serviceId = "credit-service")
+public interface CreditService {
+
+    @RequestMapping(path="/credits/{ssn}", method= RequestMethod.GET)
+    public Credit getCredit(@PathVariable("ssn") String ssn);
+
+}
+
+```
+
+The spring cloud generates a dynamic proxy for the service in the side of insurance-service so that communicates to the credit-service without implicitly getting the target ip addresses.
