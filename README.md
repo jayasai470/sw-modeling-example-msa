@@ -158,7 +158,7 @@ Also we need to run the gateway service for integrating these uris from the serv
 Now then we can access the services with single host localhost:8080:
 
 ```
-http localhost:8080/credit-service/credits ssn="770921" creditRate="C”
+http localhost:8080/credit-service/credits ssn="770921" creditRate="C"
 http localhost:8080/customers firstName="jjy" ssn="770921"   #may fail with "Low credit rate"
 
 ```
