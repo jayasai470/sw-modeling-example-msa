@@ -7,7 +7,7 @@
 There are three separated services governed by different organizations:
 
 1. Credit Service
-2. GMV (Government of motor vehicle) Service
+2. DMV (Department of motor vehicle) Service
 3. Insurance Service
 
 ### Implementing Credit Service
@@ -75,19 +75,19 @@ public interface CreditRepository extends PagingAndSortingRepository<Credit, Str
 
 Before saving the customer, insurance service need to confirm the credit rate of new coming customer, 
 
-In the Customer.java, we need to add interface 'org.metaworks.multitenancy.persistence' to the Customer.java and implement the  hooking method 'beforeSave' that will be invoked before saving the entity by the framework :
+In the Customer.java, we need to add annotation '@PrePersist' to the Customer.java and implement the hooking method 'beforeSave' that will be invoked before saving the entity by the framework :
 
 ```java
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Customer")
-public class Customer implements Serializable, BeforeSave {
+public class Customer {
   
   
   ....
 
 
-	@Override
+	@PrePersist
 	public void beforeSave() {
 
 		//REST 호출 to Credit 서비스로, 신용도를 리턴.
@@ -108,7 +108,7 @@ public class Customer implements Serializable, BeforeSave {
 
 
 		if(creditRate.compareTo("B") > 0){
-			throw new RuntimeException("신용도 부족입니다");
+			throw new RuntimeException("Low credit rate");
 		}
 	}
   
@@ -116,6 +116,15 @@ public class Customer implements Serializable, BeforeSave {
 ```
 
 [Note] To use the callback interface and method 'BeforeSave', your repository base interface must be 'MultitenantRepository' of metaworks4 framework, not the 'PagingAndSortingRepository'.
+
+The the service:
+```
+http localhost:8081/customers firstName="jjy" ssn="770921"   #may succeed
+
+http localhost:8083/credits ssn="770921" creditRate="C”
+http localhost:8081/customers firstName="jjy" ssn="770921"   #may fail with "Low credit rate"
+
+```
 
 
 ### Removing direct network address
@@ -151,7 +160,7 @@ After several seconds, go to http://localhost:8761/
 		String creditRate = creditService.getCredit(getSocialNumber()).getCreditRate();
 		
 		if(creditRate.compareTo("B") > 0){
-			throw new RuntimeException("신용도 부족입니다");
+			throw new RuntimeException("Low credit rate");
 		}
 	}
 
