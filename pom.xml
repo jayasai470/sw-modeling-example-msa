@@ -19,6 +19,7 @@
         <module>credit-service</module>
         <module>insurance-service</module>
         <module>dmv-service</module>
+        <module>marketing-service</module>
         <module>proxy-service</module>
         <module>registry-service</module>
     </modules>

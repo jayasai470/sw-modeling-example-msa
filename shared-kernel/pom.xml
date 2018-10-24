@@ -88,7 +88,7 @@
 
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <name>auto insurance bounded context classes</name>
+    <name>auto insurance shared-kernel and interface classes</name>
 
     <distributionManagement>
         <repository>

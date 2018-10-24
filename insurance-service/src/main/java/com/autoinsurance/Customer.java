@@ -14,20 +14,21 @@
 package com.autoinsurance;
 
 import com.autoinsurance.services.CreditService;
-import org.eclipse.persistence.annotations.Multitenant;
-import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.metaworks.annotation.*;
 import org.metaworks.dwr.MetaworksRemoteService;
-import org.metaworks.multitenancy.persistence.BeforeSave;
 import org.metaworks.multitenancy.persistence.TenantProperties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.util.MimeTypeUtils;
+
 
 @AddMetadataLink
 @Entity
@@ -146,6 +147,16 @@ public class Customer{
 		return birthDay;
 	}
 
+	String email;
+		public String getEmail() {
+			return email;
+		}
+
+		public void setEmail(String email) {
+			this.email = email;
+		}
+
+
 	@Hidden
 	public void setVehicles(java.util.Set value) {
 		this.vehicles = value;
@@ -198,11 +209,31 @@ public class Customer{
 					.getCredit(getSsn())
 					.getCreditRate()
 					.compareTo("B") > 0) {
-				throw new RuntimeException("Your Credit is too low. SSN: " + getSsn());
+				throw new RuntimeException("Your Credit rates too low. SSN: " + getSsn());
 			}
 		}catch(Exception e){
-			throw new RuntimeException("Check your SSN: " + getSsn(), e);
+			throw new RuntimeException(e.getMessage(), e);
 		}
+
+	}
+
+	@PostPersist
+	public void emitCustomerRegisteredEvent(){
+		Streams streams = InsuranceServiceApplication.getApplicationContext().getBean(Streams.class);
+
+		MessageChannel messageChannel = streams.outboundChannel();
+
+		CustomerRegisteredEvent customerRegisteredEvent = new CustomerRegisteredEvent();
+		customerRegisteredEvent.setCouponNumber("coupon for " + getFirstName());
+		customerRegisteredEvent.setCustomerName(getFirstName() + " " + getLastName());
+		customerRegisteredEvent.setEmailAddress(getEmail());
+
+		messageChannel.send(MessageBuilder
+				.withPayload(customerRegisteredEvent)
+				.setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+				.build());
+
+		System.out.println("Event published");
 
 	}
 
