@@ -43,5 +43,10 @@ public class GatewayApplication {
     return new CorsFilter(source);
   }
 
+  @Bean
+  public SimpleFilter filter(){
+    return new SimpleFilter();
+  }
+
 
 }

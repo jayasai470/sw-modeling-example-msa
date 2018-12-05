@@ -15,7 +15,7 @@
 
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <name>auto insurance marketing service</name>
+    <modelName>auto insurance marketing service</modelName>
 
     <dependencies>
         <dependency>

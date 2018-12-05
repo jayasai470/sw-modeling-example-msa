@@ -48,9 +48,9 @@ public class WebConfig extends Metaworks4WebConfig {
     /**
      *
      * <bean class="CouchbaseStorage">
-     *    <property name="basePath" value="/"/>
-     <property name="bucketName" value="default"/>
-     <property name="serverIp" value="localhost"/>
+     *    <property modelName="basePath" value="/"/>
+     <property modelName="bucketName" value="default"/>
+     <property modelName="serverIp" value="localhost"/>
      </bean>
      */
     public Storage storage() {

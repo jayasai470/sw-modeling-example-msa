@@ -31,6 +31,11 @@ public class SimpleFilter extends ZuulFilter {
     RequestContext ctx = RequestContext.getCurrentContext();
     HttpServletRequest request = ctx.getRequest();
 
+    if("PUT,POST,PATCH,DELETE".contains(request.getMethod())){
+      if(request.getHeader("access_token") == null)
+        throw new RuntimeException("Not authorized");
+    }
+
     log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
 
     return null;

@@ -12,10 +12,10 @@ public class Vehicle {
     String vehicleId;
 
     @ManyToOne
-    @JoinColumn(name="brandId")
+    @JoinColumn(name="owner_id")
     Owner owner;
 
-    String name;
+    String modelName;
 
     public String getVehicleId() {
         return vehicleId;
@@ -25,12 +25,12 @@ public class Vehicle {
         this.vehicleId = vehicleId;
     }
 
-    public String getName() {
-        return name;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
     public Owner getOwner() {

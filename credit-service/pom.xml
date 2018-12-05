@@ -15,7 +15,7 @@
 
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <name>auto insurance credit service</name>
+    <modelName>auto insurance credit service</modelName>
 
     <dependencies>
     </dependencies>

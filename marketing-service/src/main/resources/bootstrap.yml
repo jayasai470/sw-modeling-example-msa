@@ -1,6 +1,6 @@
 spring:
   application:
-      name: marketing-service
+      modelName: marketing-service
   profiles:
     active: "local"
 

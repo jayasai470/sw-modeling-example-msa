@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gmv-service
+    name: dmv-service
 
 server:
   port: ${port:8088}

@@ -49,7 +49,7 @@ eureka:
     statusPageUrl: http://${eureka.instance.hostname}:${eureka.instance.nonSecurePort}/info
     healthCheckUrl: http://${eureka.instance.hostname}:${eureka.instance.nonSecurePort}/health
     homePageUrl: http://${eureka.instance.hostname}:${eureka.instance.nonSecurePort}/
-    instanceId: ${HOST}:${spring.application.name}:${PORT}
+    instanceId: ${HOST}:${spring.application.modelName}:${PORT}
     metadataMap:
         project: ${CI_PROJECT_NAME}
         commitSha: ${CI_COMMIT_SHA}

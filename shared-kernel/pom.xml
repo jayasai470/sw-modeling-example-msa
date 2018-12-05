@@ -88,7 +88,7 @@
 
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-    <name>auto insurance shared-kernel and interface classes</name>
+    <modelName>auto insurance shared-kernel and interface classes</modelName>
 
     <distributionManagement>
         <repository>

@@ -197,7 +197,7 @@ public class Customer{
 
 	/** uncommend if want to apply credit validation before saving the customer info **/
 
-	@PrePersist
+//	@PrePersist
 	public void beforeSave() {
 
 		CreditService creditService = MetaworksRemoteService.getInstance().getComponent(CreditService.class);
